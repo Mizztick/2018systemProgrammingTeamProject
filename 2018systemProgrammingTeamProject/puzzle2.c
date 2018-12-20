@@ -1,7 +1,23 @@
 #include	<stdio.h>
+#include	<termios.h>
+#include	<stdlib.h>
 
+static struct termios oldt;
 
+void restore_terminal_setting(void)
+{
+	tcsetattr(0, TCSANOW, &oldt);
+}
 
+void disable_terminal_return(void)
+{
+	struct termios newt;
+	tcgetattr(0, &oldt);
+	newt = oldt;
+	newt.c_lflag &= ~(ICANON | ECHO);
+	tcsetattr(0, TCSANOW, &newt);
+	atexit(restore_terminal_setting);
+}
 
 
 void rotateBoard(int board[4][4])//¿ŞÂÊÈ¸Àü
