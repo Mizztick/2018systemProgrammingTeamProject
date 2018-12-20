@@ -10,30 +10,12 @@
 #define SIZE 4
 
 int score=0;
-int scheme=0;
 
 
-//make the color for board and number
-void makecolor(int value, char *color, size_t length){
-        int basic[] = {8,255,1,255,2,255,3,255,4,255,5,255,6,255,7,255,9,0,10,0,11,0,12,0,13,0,14,0,255,0,255,0};
-        int * schemes[] = {basic};
-        int * background = schemes[scheme]+0;
-        int * foreground = schemes[scheme]+1;
-
-        if (value > 0) while (value--) {
-                if (background+2<schemes[scheme]+sizeof(basic)) {
-                        background+=2;
-                        foreground+=2;
-                }
-        }
-
-        printf(color,length,"\033[38;5;%d;48;5;%dm",*foreground,*background);
-}
 //make 4x4 board & pts
 void makeboard(int board[SIZE][SIZE]){
         int x, y;
         int c;
-        char color[40], reset[]="\033[m]";
 
         printf("  2222      000        44     8888     \n");
         printf(" 22  22   00   00     4 4    88  88    \n");
@@ -53,31 +35,21 @@ void makeboard(int board[SIZE][SIZE]){
 
         for (y=0;y<SIZE;y++) {
                 for (x=0;x<SIZE;x++) {
-                      //  makecolor(board[x][y],color,40);
-                      // printf("%s",color);
                         printf("       ");
-                       // printf("%s",reset);
                 }
                 printf("\n");
                 for (x=0;x<SIZE;x++) {
-                     //   makecolor(board[x][y],color,40);
-                       // printf("%s",color);
                         if (board[x][y]!=0) {
                                 char s[8];
-                               // printf(s,8,"%lu",(long)1<<board[x][y]);
-                                char t = 7-strlen(s);
+                                int t = 7-(int)strlen(s);
                                 printf("%*s%s%*s",t-t/2,"",s,t/2,"");
                         } else {
                                 printf("   +   ");
                         }
-                       // printf("%s",reset);
                 }
                 printf("\n");
                 for (x=0;x<SIZE;x++) {
-                       // makecolor(board[x][y],color,40);
-                      //  printf("%s",color);
                         printf("       ");
-                       // printf("%s",reset);
                 }
                 printf("\n");
 
